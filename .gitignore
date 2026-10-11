@@ -1,0 +1,32 @@
+﻿# Environment variables and secrets
+.env
+.env.*
+!.env.example
+secrets/
+*.pem
+*.key
+*.p12
+*.pfx
+**/*service-account*.json
+**/*service_account*.json
+**/*credentials*.json
+
+# Python cache and virtual environments
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+env/
+
+# JavaScript dependencies
+node_modules/
+
+# Build outputs and generated caches
+dist/
+build/
+.cache/
+
+# Operating system files
+.DS_Store
+Thumbs.db

@@ -1,0 +1,32 @@
+{
+  "name": "TouchGrass",
+  "version": "0.1.0",
+  "manifest_version": 3,
+  "description": "AI cognitive-reset companion for developers. Detects stuck states, enforces real breaks.",
+  "permissions": [
+    "storage",
+    "alarms",
+    "idle",
+    "tabs",
+    "scripting",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "http://127.0.0.1:8765/*"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "TouchGrass"
+  },
+  "content_scripts": [],
+  "web_accessible_resources": [
+    {
+      "resources": ["reflection.html", "break-offer.html", "break.html"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

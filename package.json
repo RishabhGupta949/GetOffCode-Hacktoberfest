@@ -1,0 +1,10 @@
+{
+  "name": "touchgrass",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "TouchGrass — AI cognitive-reset companion for developers (extension pure-logic tests)",
+  "scripts": {
+    "test": "node --test \"extension/tests/*.test.js\""
+  }
+}

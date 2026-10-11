@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>TouchGrass - Break</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: 0; background: #0f172a; color: #f1f5f9; font-family: system-ui, -apple-system, sans-serif; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+    #tg-break-overlay { width: 100%; height: 100%; position: fixed; top: 0; left: 0; }
+    .tg-card { background: rgba(30, 41, 59, 0.9); border: 1px solid rgba(148, 163, 184, 0.2); border-radius: 16px; padding: 48px 64px; text-align: center; max-width: 90vw; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5); position: relative; }
+    .tg-icon { font-size: 64px; margin-bottom: 16px; color: #22c55e; }
+    .tg-title { margin: 0 0 12px; font-size: 28px; font-weight: 600; line-height: 1.3; color: #f1f5f9; }
+    .tg-type { font-size: 14px; color: #94a3b8; margin-bottom: 32px; text-transform: capitalize; letter-spacing: 0.5px; }
+    .tg-timer-container { position: relative; width: 240px; height: 240px; margin: 0 auto 24px; display: flex; align-items: center; justify-content: center; }
+    .tg-svg { width: 240px; height: 240px; }
+    .tg-timer-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 56px; font-weight: 800; font-variant-numeric: tabular-nums; color: #f1f5f9; font-family: ui-monospace, SFMono-Regular, monospace; letter-spacing: -1px; text-shadow: 0 0 24px rgba(61, 138, 53, 0.35); }
+    .tg-timer-label { position: absolute; top: calc(50% + 34px); left: 50%; transform: translate(-50%, -50%); font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: #4a7a45; }
+    .tg-msg { margin: 0 0 24px; font-size: 16px; color: #2e5e2a; max-width: 380px; line-height: 1.6; font-weight: 500; }
+    .tg-back-btn { padding: 14px 40px; font-size: 16px; font-weight: 700; background: #2e6b28; color: #ffffff; border: none; border-radius: 999px; cursor: pointer; transition: background 0.15s, transform 0.15s, box-shadow 0.15s; box-shadow: 0 6px 18px -6px rgba(46, 107, 40, 0.6); letter-spacing: 0.3px; }
+    .tg-back-btn:hover { background: #245a20; transform: translateY(-1px); }
+    @media (max-height: 700px) { .tg-break-person { display: none; } }
+  </style>
+</head>
+<body>
+  <div id="tg-break-overlay">
+    <div class="tg-card">
+      <div class="tg-icon">🌿</div>
+      <h1 class="tg-title" id="tg-break-title">Take a Break</h1>
+      <div class="tg-type" id="tg-break-type"></div>
+      
+      <div class="tg-timer-container">
+        <svg class="tg-svg" viewBox="0 0 240 240" width="240" height="240">
+          <circle class="tg-bg-circle" cx="120" cy="120" r="110" fill="none" stroke="rgba(45, 100, 45, 0.15)" stroke-width="10"/>
+          <circle class="tg-progress-circle" id="tg-progress-circle" cx="120" cy="120" r="110" fill="none" stroke="#3d8a35" stroke-width="10" stroke-linecap="round" stroke-dasharray="3801.065"/>
+          <div class="tg-timer-text" id="tg-break-timer">00:00</div>
+          <div class="tg-timer-label">remaining</div>
+        </svg>
+      </div>
+      
+      <p class="tg-msg" id="tg-break-msg">Your brain is outside now. 🌿 Nothing to debug right now.</p>
+      
+      <button class="tg-back-btn" id="tg-back-btn">I'm Back</button>
+    </div>
+  </div>
+
+  <script src="break.js"></script>
+</body>
+</html>

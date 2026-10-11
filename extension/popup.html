@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>TouchGrass</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { width: 320px; font: 14px/1.5 system-ui, sans-serif; margin: 0; padding: 16px; color: #1a1a1a; }
+    .card { background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; padding: 16px; margin-bottom: 12px; }
+    .card h3 { margin: 0 0 12px; font-size: 14px; font-weight: 600; color: #333; }
+    .row { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 8px; }
+    .row:last-child { margin-bottom: 0; }
+    .label { color: #666; font-size: 13px; }
+    .value { font-weight: 500; }
+    .badge { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 11px; font-weight: 600; }
+    .badge-idle { background: #e8f5e9; color: #2e7d32; }
+    .badge-working { background: #e3f2fd; color: #1565c0; }
+    .badge-stuck { background: #fff3e0; color: #e65100; }
+    .badge-break { background: #fce4ec; color: #c2185b; }
+    .badge-reflection { background: #f3e5f5; color: #7b1fa2; }
+    .badge-ai { background: #e8eaf6; color: #3949ab; }
+    button { width: 100%; padding: 10px 12px; border: none; border-radius: 6px; font: inherit; font-weight: 500; cursor: pointer; transition: background 0.15s; }
+    .btn-primary { background: #1976d2; color: #fff; }
+    .btn-primary:hover { background: #1565c0; }
+    .btn-secondary { background: #f5f5f5; color: #333; border: 1px solid #ddd; }
+    .btn-secondary:hover { background: #eee; }
+    .btn-danger { background: #fff; color: #c62828; border: 1px solid #ef9a9a; }
+    .btn-danger:hover { background: #fbe9e7; }
+    .stuck-form { display: none; gap: 8px; flex-direction: column; }
+    .stuck-form.visible { display: flex; }
+    textarea { width: 100%; min-height: 60px; padding: 8px; border: 1px solid #ddd; border-radius: 4px; font: inherit; resize: vertical; }
+    
+    .demo-badge { background: #e0e0e0; color: #424242; font-size: 10px; padding: 1px 6px; border-radius: 4px; margin-left: 8px; }
+    .error { color: #c62828; font-size: 12px; margin-top: 8px; display: none; }
+    .error.visible { display: block; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h3>TouchGrass</h3>
+    <div class="row">
+      <span class="label">Status</span>
+      <span id="statusBadge" class="badge badge-idle">IDLE</span>
+      <span id="demoBadge" class="demo-badge" style="display:none">DEMO</span>
+    </div>
+    <div class="row">
+      <span class="label">Session</span>
+      <span id="sessionId" class="value" style="font-size:11px; color:#999">—</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Stuck Detection</h3>
+    <button id="btnStuck" class="btn-primary">I'm Stuck</button>
+    <div id="stuckForm" class="stuck-form">
+      <textarea id="stuckProblem" placeholder="What are you working on? (optional)"></textarea>
+      <textarea id="stuckError" placeholder="Error message? (optional)"></textarea>
+      <div style="display:flex; gap:8px;">
+        <button id="btnSubmitStuck" class="btn-primary" style="flex:1">Submit</button>
+        <button id="btnCancelStuck" class="btn-secondary" style="flex:1">Cancel</button>
+      </div>
+    </div>
+    <div id="errorMsg" class="error"></div>
+  </div>
+
+  <div class="card" style="border-top: 3px solid #e0e0e0;">
+    <h3>Activity Monitoring</h3>
+    <div class="row">
+      <span class="label">Automatic suggestions</span>
+      <input type="checkbox" id="btnMonitoring">
+    </div>
+    <div class="row">
+      <span class="label">Status</span>
+      <span id="monitorStatus" class="value">Off</span>
+    </div>
+    <p style="font-size: 11px; color: #888; margin: 8px 0 0; line-height: 1.5;">
+      Local signals only: active session duration, tab-switch frequency, window focus,
+      idle/active state. No page content, keystrokes, cookies, screenshots, or full
+      browsing history is collected. Only summary counts are sent to the backend,
+      where the AI agent evaluates them and picks a break suggestion you accept or dismiss.
+    </p>
+    <div class="row" style="margin-top: 10px;">
+      <span class="label">Demo mode (15s trigger)</span>
+      <input type="checkbox" id="btnDemoMode">
+    </div>
+    <p id="demoHint" style="font-size: 11px; color: #888; display: none; margin: 6px 0 0; line-height: 1.5;">
+      Demo: after 15 seconds of active browsing the agent runs and shows a suggestion.
+      15 seconds is only the trigger, not the break duration — the AI still chooses it.
+    </p>
+  </div>
+
+  <div class="card" style="border-top: 3px solid #e0e0e0;">
+    <h3>Quick Actions</h3>
+    <button id="btnReflection" class="btn-secondary" style="display:none">Open Reflection</button>
+    <button id="btnResume" class="btn-secondary" style="display:none">Resume Work</button>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

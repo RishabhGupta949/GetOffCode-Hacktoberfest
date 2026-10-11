@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>TouchGrass - Reflection</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { font: 16px/1.6 system-ui, sans-serif; margin: 0; padding: 40px 20px; background: #f8fafc; min-height: 100vh; display: flex; align-items: center; justify-content: center; color: #1e293b; }
+    .container { width: 100%; max-width: 560px; background: #fff; border-radius: 16px; box-shadow: 0 10px 40px -10px rgba(15,23,42,0.15); padding: 40px; }
+    .header { text-align: center; margin-bottom: 32px; }
+    .icon { font-size: 56px; margin-bottom: 16px; }
+    h1 { margin: 0 0 8px; font-size: 28px; font-weight: 700; color: #0f172a; }
+    .subtitle { color: #64748b; font-size: 16px; margin: 0; }
+    .choices { display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; }
+    .choice-btn { display: flex; align-items: center; gap: 16px; padding: 18px 24px; border: 2px solid #e2e8f0; border-radius: 12px; background: #fff; font: inherit; cursor: pointer; transition: all 0.15s; text-align: left; width: 100%; }
+    .choice-btn:hover { border-color: #cbd5e1; background: #f8fafc; }
+    .choice-btn:focus { outline: none; border-color: #22c55e; box-shadow: 0 0 0 3px rgba(34,197,94,0.15); }
+    .choice-icon { font-size: 28px; flex-shrink: 0; }
+    .choice-text { flex: 1; }
+    .choice-label { font-weight: 600; font-size: 16px; color: #0f172a; }
+    .choice-desc { font-size: 13px; color: #64748b; margin-top: 2px; }
+    .divider { text-align: center; color: #94a3b8; font-size: 13px; margin: 16px 0; position: relative; }
+    .divider::before, .divider::after { content: ""; position: absolute; top: 50%; width: 40%; height: 1px; background: #e2e8f0; }
+    .divider::before { left: 0; }
+    .divider::after { right: 0; }
+
+    /* Hypothesis section */
+    .hypothesis-section { display: none; border-top: 1px solid #e2e8f0; padding-top: 24px; margin-top: 24px; }
+    .hypothesis-section.visible { display: block; }
+    .hypothesis-card { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 12px; padding: 20px; margin-bottom: 20px; }
+    .hypothesis-header { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+    .hypothesis-badge { background: #22c55e; color: #fff; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 4px; text-transform: uppercase; }
+    .hypothesis-source { font-size: 12px; color: #64748b; }
+    .hypothesis-text { font-size: 15px; color: #166534; line-height: 1.7; margin: 0; font-style: italic; }
+
+    .feedback { display: flex; gap: 8px; }
+    .feedback-btn { flex: 1; padding: 12px 16px; border: 2px solid #e2e8f0; border-radius: 8px; background: #fff; font: inherit; font-weight: 500; cursor: pointer; transition: all 0.15s; }
+    .feedback-btn:hover { border-color: #cbd5e1; }
+    .feedback-btn:focus { outline: none; border-color: #22c55e; box-shadow: 0 0 0 3px rgba(34,197,94,0.15); }
+    .feedback-btn.fixed { border-color: #22c55e; background: #f0fdf4; color: #166534; }
+    .feedback-btn.partial { border-color: #f59e0b; background: #fffbeb; color: #92400e; }
+    .feedback-btn.none { border-color: #ef4444; background: #fef2f2; color: #991b1b; }
+
+    .back-link { display: block; text-align: center; margin-top: 24px; color: #64748b; text-decoration: none; font-size: 14px; }
+    .back-link:hover { color: #22c55e; }
+
+    .demo-badge { display: inline-block; background: #e0e0e0; color: #424242; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 999px; margin-left: 8px; vertical-align: middle; }
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="icon">🌿</div>
+      <h1>Did anything click while you were away?<span id="demoBadge" class="demo-badge hidden">DEMO</span></h1>
+      <p class="subtitle">Take a moment. No pressure.</p>
+    </div>
+
+    <div class="choices">
+      <button class="choice-btn" data-choice="idea">
+        <span class="choice-icon">💡</span>
+        <div class="choice-text">
+          <div class="choice-label">Yes, I have a new idea</div>
+          <div class="choice-desc">I want to try my own approach first</div>
+        </div>
+      </button>
+      <button class="choice-btn" data-choice="maybe">
+        <span class="choice-icon">🤔</span>
+        <div class="choice-text">
+          <div class="choice-label">Maybe, still thinking</div>
+          <div class="choice-desc">Something shifted but not clear yet</div>
+        </div>
+      </button>
+      <button class="choice-btn" data-choice="none">
+        <span class="choice-icon">❌</span>
+        <div class="choice-text">
+          <div class="choice-label">No, nothing yet</div>
+          <div class="choice-desc">I'd like a gentle suggestion</div>
+        </div>
+      </button>
+    </div>
+
+    <div class="hypothesis-section" id="hypothesisSection">
+      <div class="hypothesis-card">
+        <div class="hypothesis-header">
+          <span class="hypothesis-badge">Suggestion</span>
+          <span class="hypothesis-source" id="hypSource"></span>
+        </div>
+        <p class="hypothesis-text" id="hypText"></p>
+      </div>
+      <div class="feedback">
+        <button class="feedback-btn fixed" data-outcome="fixed">✅ Fixed it</button>
+        <button class="feedback-btn partial" data-outcome="partial">🟡 Partially helped</button>
+        <button class="feedback-btn none" data-outcome="none">❌ Didn't help</button>
+      </div>
+    </div>
+
+    <a href="#" class="back-link" id="backLink">← Back to work</a>
+  </div>
+
+  <script src="reflection.js"></script>
+</body>
+</html>
