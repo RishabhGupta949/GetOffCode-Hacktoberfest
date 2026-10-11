@@ -4,7 +4,7 @@
  * Stays open until user acts (unlike popup).
  */
 
-const API_BASE = "http://127.0.0.1:8765/api/v1";
+const API_BASE = "https://touchgrass-api-vat6.onrender.com";
 
 async function sendMsg(msg) {
   return new Promise(resolve => chrome.runtime.sendMessage(msg, resolve));
