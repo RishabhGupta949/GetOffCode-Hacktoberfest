@@ -9,7 +9,7 @@ import {
   markSuggested,
 } from "./activity-monitor.js";
 
-const API_BASE = "https://touchgrass-api-vat6.onrender.com";
+const API_BASE = "https://touchgrass-api-vat6.onrender.com/api/v1";
 const SAMPLE_INTERVAL_MS = 60_000; // 1 minute
 const SESSION_ID_KEY = "tg_session_id";
 const STATE_KEY = "tg_state";

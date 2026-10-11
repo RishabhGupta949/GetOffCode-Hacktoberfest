@@ -4,7 +4,7 @@
  * blocks inline scripts on extension pages).
  */
 
-const API_BASE = "https://touchgrass-api-vat6.onrender.com";
+const API_BASE = "https://touchgrass-api-vat6.onrender.com/api/v1";
 
 async function sendMsg(msg) {
   return new Promise(resolve => chrome.runtime.sendMessage(msg, resolve));

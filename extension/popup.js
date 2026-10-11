@@ -3,7 +3,7 @@
  * Shows status, handles explicit stuck, break offer, reflection/resume actions
  */
 
-const API_BASE = "https://touchgrass-api-vat6.onrender.com";
+const API_BASE = "https://touchgrass-api-vat6.onrender.com/api/v1";
 
 const stateLabels = {
   IDLE: { text: "IDLE", class: "badge-idle" },
