@@ -6,5 +6,9 @@
   "description": "TouchGrass — AI cognitive-reset companion for developers (extension pure-logic tests)",
   "scripts": {
     "test": "node --test \"extension/tests/*.test.js\""
+  },
+  "dependencies": {
+    "adm-zip": "^0.6.1",
+    "archiver": "^8.0.0"
   }
 }
